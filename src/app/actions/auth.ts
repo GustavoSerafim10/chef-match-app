@@ -49,6 +49,24 @@ export async function cadastrar(formData: FormData) {
   redirect("/painel?msg=" + encodeURIComponent("Bem-vindo(a) ao Chef's Match!"));
 }
 
+/** Contas de demonstração (dados fictícios, criados por scripts/seed.mjs). */
+const DEMO: Record<string, string> = {
+  empresa: "bistro.cerrado@chefmatch.app",
+  profissional: "lucas.mendes@chefmatch.app",
+  fornecedor: "carnes.nobre@chefmatch.app",
+};
+const DEMO_SENHA = "chefmatch2026";
+
+export async function entrarDemo(formData: FormData) {
+  const email = DEMO[texto(formData, "perfil")];
+  if (!email) redirect(comErro("/entrar", "Perfil de demonstração inválido."));
+  const supabase = await createClient();
+  await supabase.auth.signOut();
+  const { error } = await supabase.auth.signInWithPassword({ email, password: DEMO_SENHA });
+  if (error) redirect(comErro("/entrar", "O modo demonstração está indisponível agora. Tente de novo em instantes."));
+  redirect("/painel?msg=" + encodeURIComponent("Você está no modo demonstração. Os dados são fictícios: fique à vontade para testar."));
+}
+
 export async function sair() {
   const supabase = await createClient();
   await supabase.auth.signOut();

@@ -2,13 +2,14 @@ import Link from "next/link";
 import { entrar } from "@/app/actions/auth";
 import { Logo, Notice, btn, input, label, lerAvisos, type SP } from "@/components/ui";
 import { SubmitButton } from "@/components/submit-button";
+import { DemoButtons } from "@/components/demo-buttons";
 
 export const metadata = { title: "Entrar · Chef's Match" };
 
 export default async function Entrar({ searchParams }: { searchParams: SP }) {
   const { erro, msg } = await lerAvisos(searchParams);
   return (
-    <main className="mx-auto grid w-full max-w-md flex-1 content-center gap-8 px-4 py-10">
+    <main className="mx-auto grid w-full max-w-xl flex-1 content-center gap-8 px-4 py-10">
       <Link href="/">
         <Logo />
       </Link>
@@ -36,6 +37,9 @@ export default async function Entrar({ searchParams }: { searchParams: SP }) {
           Criar conta grátis
         </Link>
       </p>
+      <div className="border-t border-line pt-6">
+        <DemoButtons titulo="Ou teste com um clique" />
+      </div>
     </main>
   );
 }

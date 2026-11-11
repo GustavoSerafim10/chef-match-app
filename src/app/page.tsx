@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Logo, btn, btnGhost, lerAvisos, type SP } from "@/components/ui";
+import { DemoButtons } from "@/components/demo-buttons";
 import { createClient, supabaseConfigurado } from "@/lib/supabase/server";
 
 const pilares = [
@@ -63,6 +64,10 @@ export default async function Home({ searchParams }: { searchParams: SP }) {
             </Link>
           </div>
         </section>
+
+        <div className="pb-10">
+          <DemoButtons />
+        </div>
 
         <section className="grid gap-4 pb-6 sm:grid-cols-3">
           {pilares.map((p) => (
