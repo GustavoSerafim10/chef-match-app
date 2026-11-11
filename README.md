@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chef's Match: app
 
-## Getting Started
+> **A gastronomia se conecta aqui.** Plataforma que conecta profissionais da gastronomia, restaurantes e fornecedores. Projeto de startup com lançamento em Brasília/DF.
 
-First, run the development server:
+Site do projeto: https://gustavoserafim10.github.io/SiteChef-Match/
+
+## O que o app faz
+
+**Profissional** (sempre grátis)
+- Liga o **"Disponível hoje"** para aparecer nas buscas urgentes de restaurantes
+- Vê as vagas ordenadas por **compatibilidade** com o perfil e se candidata em um toque
+- Recebe convites, aceita ou recusa, e avalia o estabelecimento depois do trabalho
+
+**Estabelecimento**
+- **"Preciso de alguém hoje"**: publica um extra e vê na hora quem está disponível, com a % de compatibilidade e o motivo
+- Publica vagas efetivas, temporárias e extras, contrata e avalia o profissional
+- Pede **cotação** de insumos, compara as propostas por preço, prazo ou avaliação e aprova o pedido
+
+**Fornecedor**
+- Mantém o catálogo de produtos
+- Recebe cotações de restaurantes, envia propostas e avalia o comprador
+
+**Chef's Match Qualidade**
+- Reputação nos dois sentidos, com nota, quantidade de avaliações e distribuição
+- **Só avalia quem teve uma experiência confirmada** no app (contratação aceita ou pedido aprovado)
+
+## Stack
+
+- **Next.js 16** (App Router, Server Components, Server Actions, `proxy.ts`)
+- **Supabase**: Postgres, Auth e Row Level Security em todas as tabelas
+- **Tailwind CSS 4**
+- PWA instalável no celular
+
+## Rodando localmente
 
 ```bash
+npm install
+cp .env.example .env.local   # preencha com a URL e a chave anon do Supabase
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Banco: rode `supabase/schema.sql` no SQL Editor do Supabase.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Estrutura
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+  app/
+    page.tsx              abertura
+    entrar/, cadastro/    autenticação
+    (app)/                área logada (layout com menu por tipo de usuário)
+      painel/             painel de cada tipo de usuário
+      vagas/              lista, nova vaga, detalhe com match e convites
+      cotacoes/           cotações e comparação de propostas
+      produtos/           catálogo de fornecedores
+      perfil/             meu perfil e perfil público com reputação
+    actions/              Server Actions (auth e regras do app)
+  lib/                    Supabase, tipos e cálculo de compatibilidade
+  proxy.ts                renova a sessão e protege as rotas
+supabase/schema.sql       tabelas, gatilhos e políticas de segurança
+```
