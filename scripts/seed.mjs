@@ -3,6 +3,7 @@
 //   node scripts/seed.mjs                  cria contas, vagas, cotações e avaliações (uma vez)
 //   node scripts/seed.mjs --disponibilidade  só marca os profissionais demo como "disponível hoje"
 //                                          (rode no dia da apresentação: a disponibilidade vale só para o dia)
+//   node scripts/seed.mjs --cotacao        cria uma cotação aberta com 3 propostas para demonstrar a comparação
 //
 // Todas as contas demo usam a senha: chefmatch2026
 
@@ -82,7 +83,39 @@ async function marcarDisponiveis() {
   }
 }
 
+/** Cria uma cotação aberta do Bistrô com 3 propostas (cena da demonstração de compras). */
+async function novaCotacaoDemo() {
+  const bistro = await entrar(EMPRESAS[0], "empresa");
+  const { data: cot, error } = await bistro.sb
+    .from("cotacoes")
+    .insert({
+      empresa_id: bistro.id,
+      titulo: "Hortifruti da semana",
+      itens: "Tomate italiano: 20 kg\nBatata lavada: 30 kg\nCebola: 15 kg\nAlface americana: 8 caixas",
+      categoria: "Hortifruti",
+    })
+    .select()
+    .single();
+  if (error) throw new Error("cotação: " + error.message);
+  const ofertas = [
+    [FORNECEDORES[0], 412, 1, "Grátis acima de R$ 300", "Pix ou boleto 14 dias"],
+    [FORNECEDORES[2], 368, 2, "R$ 25", "Pix"],
+    [FORNECEDORES[1], 395, 1, "R$ 15", "Boleto 28 dias"],
+  ];
+  for (const [f, preco_total, prazo_dias, frete, pagamento] of ofertas) {
+    const forn = await entrar(f, "fornecedor");
+    const r = await forn.sb.from("propostas").insert({ cotacao_id: cot.id, fornecedor_id: forn.id, preco_total, prazo_dias, frete, pagamento });
+    if (r.error) throw new Error("proposta: " + r.error.message);
+  }
+}
+
 async function main() {
+  if (process.argv.includes("--cotacao")) {
+    console.log("Criando nova cotação aberta com 3 propostas para o Bistrô Cerrado…");
+    await novaCotacaoDemo();
+    console.log("Pronto.");
+    return;
+  }
   if (process.argv.includes("--disponibilidade")) {
     console.log(`Marcando disponibilidade para ${hoje}…`);
     await marcarDisponiveis();

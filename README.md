@@ -2,6 +2,7 @@
 
 > **A gastronomia se conecta aqui.** Plataforma que conecta profissionais da gastronomia, restaurantes e fornecedores. Projeto de startup com lançamento em Brasília/DF.
 
+**App no ar:** https://chef-match-app.vercel.app  
 Site do projeto: https://gustavoserafim10.github.io/SiteChef-Match/
 
 ## O que o app faz
