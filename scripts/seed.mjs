@@ -4,6 +4,8 @@
 //   node scripts/seed.mjs --disponibilidade  só marca os profissionais demo como "disponível hoje"
 //                                          (rode no dia da apresentação: a disponibilidade vale só para o dia)
 //   node scripts/seed.mjs --cotacao        cria uma cotação aberta com 3 propostas para demonstrar a comparação
+//   node scripts/seed.mjs --preparar-demo  TUDO de uma vez antes da apresentação: disponibilidade de hoje,
+//                                          nova cotação e vagas + convite pendente para o Lucas
 //
 // Todas as contas demo usam a senha: chefmatch2026
 
@@ -109,7 +111,35 @@ async function novaCotacaoDemo() {
   }
 }
 
+/** Vagas de garçom abertas e um convite pendente para o Lucas (cena do profissional). */
+async function cenaProfissional() {
+  const lago = await entrar(EMPRESAS[1], "empresa");
+  const padaria = await entrar(EMPRESAS[2], "empresa");
+  const lucas = await entrar(PROFISSIONAIS[0], "profissional");
+  const nova = async (e, v) => {
+    const r = await e.sb.from("vagas").insert({ empresa_id: e.id, regiao: e.regiao, ...v }).select().single();
+    if (r.error) throw new Error("vaga: " + r.error.message);
+    return r.data;
+  };
+  const convite = await nova(lago, {
+    funcao: "Garçom", tipo: "extra", urgente: true, data_turno: hoje,
+    remuneracao: "R$ 200 a diária", horario: "19h às 01h", descricao: "Jantar de casamento para 90 convidados.",
+  });
+  await nova(padaria, { funcao: "Garçom", tipo: "efetivo", remuneracao: "R$ 1.900/mês + VT", horario: "6h às 14h, 6x1", descricao: "Atendimento no café da manhã e almoço." });
+  await nova(lago, { funcao: "Garçom", tipo: "temporario", remuneracao: "R$ 2.300/mês", horario: "18h às 00h", descricao: "Temporada de fim de ano, 2 meses." });
+  const r = await lago.sb.from("candidaturas").insert({ vaga_id: convite.id, profissional_id: lucas.id, origem: "convite" });
+  if (r.error) throw new Error("convite: " + r.error.message);
+}
+
 async function main() {
+  if (process.argv.includes("--preparar-demo")) {
+    console.log("Preparando a demonstração…");
+    await marcarDisponiveis();
+    await novaCotacaoDemo();
+    await cenaProfissional();
+    console.log("\nPronto! Profissionais disponíveis hoje, nova cotação com 3 propostas e convite + vagas para o Lucas.");
+    return;
+  }
   if (process.argv.includes("--cotacao")) {
     console.log("Criando nova cotação aberta com 3 propostas para o Bistrô Cerrado…");
     await novaCotacaoDemo();
