@@ -29,7 +29,8 @@ type CandComVaga = Candidatura & { vaga: Vaga & { empresa: Pick<Profile, "id" | 
 export default async function Painel({ searchParams }: { searchParams: SP }) {
   const { erro, msg } = await lerAvisos(searchParams);
   const { supabase, profile } = await getContexto();
-  const primeiroNome = profile.nome.split(" ")[0];
+  // Pessoa: primeiro nome. Negócio: nome completo ("Olá, Carnes!" soaria estranho).
+  const primeiroNome = profile.role === "profissional" ? profile.nome.split(" ")[0] : profile.nome;
 
   const { data: minhaRep } = await supabase.from("reputacao").select("*").eq("perfil_id", profile.id).maybeSingle();
   const rep = minhaRep as Reputacao | null;
@@ -51,6 +52,8 @@ export default async function Painel({ searchParams }: { searchParams: SP }) {
     const sugestoes = ((vagasData ?? []) as Vaga[])
       .filter((v) => !jaEstou.has(v.id))
       .map((v) => ({ v, m: calcularMatch(profile, v) }))
+      // Só sugere vagas da função da pessoa (ou todas, se ela ainda não escolheu uma função)
+      .filter(({ m }) => !profile.funcao || m.motivos.includes("Mesma função"))
       .sort((a, b) => b.m.score - a.m.score)
       .slice(0, 5);
 
@@ -108,7 +111,9 @@ export default async function Painel({ searchParams }: { searchParams: SP }) {
           Vagas para você
         </SectionTitle>
         {sugestoes.length === 0 ? (
-          <Empty title="Nenhuma vaga aberta no momento">Ligue o “disponível hoje” para receber convites urgentes.</Empty>
+          <Empty title={`Nenhuma vaga nova de ${profile.funcao ?? "sua função"} agora`} href="/vagas" cta="Ver vagas de outras funções">
+            Ligue o “disponível hoje” para receber convites urgentes.
+          </Empty>
         ) : (
           <div className="grid gap-3">
             {sugestoes.map(({ v, m }) => (

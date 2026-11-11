@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getContexto } from "@/lib/auth";
-import { hoje, texto } from "@/lib/utils";
+import { hoje, numeroBR, texto } from "@/lib/utils";
 
 const voltar = (rota: string, tipo: "erro" | "msg", m: string) =>
   redirect(`${rota}${rota.includes("?") ? "&" : "?"}${tipo}=${encodeURIComponent(m)}`);
@@ -132,7 +132,7 @@ export async function criarProduto(formData: FormData) {
   const { supabase, profile } = await getContexto();
   const nome = texto(formData, "nome");
   if (!nome) voltar("/produtos", "erro", "Informe o nome do produto.");
-  const preco = Number(texto(formData, "preco").replace(",", "."));
+  const preco = numeroBR(texto(formData, "preco"));
   await supabase.from("produtos").insert({
     fornecedor_id: profile.id,
     nome,
@@ -170,7 +170,7 @@ export async function enviarProposta(formData: FormData) {
   const { supabase, profile } = await getContexto();
   const cotacaoId = texto(formData, "cotacao_id");
   const rota = `/cotacoes/${cotacaoId}`;
-  const preco = Number(texto(formData, "preco_total").replace(".", "").replace(",", "."));
+  const preco = numeroBR(texto(formData, "preco_total"));
   const prazo = Number(texto(formData, "prazo_dias"));
   if (!Number.isFinite(preco) || preco <= 0 || !Number.isFinite(prazo) || prazo < 0) voltar(rota, "erro", "Informe preço e prazo válidos.");
   const { error } = await supabase.from("propostas").insert({

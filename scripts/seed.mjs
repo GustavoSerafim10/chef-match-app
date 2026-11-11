@@ -56,7 +56,10 @@ async function entrar(conta, role, extra = {}) {
     if (error || !data.session) throw new Error(`${conta.email}: ${error?.message ?? "sem sessão (confirmação de e-mail ligada?)"}`);
   }
   const id = data.user.id;
-  const { error: e2 } = await sb.from("profiles").update({ telefone: conta.telefone ?? null, bio: conta.bio ?? null, ...extra }).eq("id", id);
+  const { error: e2 } = await sb
+    .from("profiles")
+    .update({ nome: conta.nome, regiao: conta.regiao, telefone: conta.telefone ?? null, bio: conta.bio ?? null, ...extra })
+    .eq("id", id);
   if (e2) throw new Error(`perfil ${conta.email}: ${e2.message}`);
   return { sb, id, ...conta };
 }

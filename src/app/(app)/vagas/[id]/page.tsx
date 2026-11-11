@@ -66,7 +66,7 @@ export default async function VagaPage({ params, searchParams }: { params: Promi
     const rm = mapaReputacao(repsPro as Reputacao[]);
     sugeridos = lista
       .map((p) => ({ p, m: calcularMatch(p, vaga, rm.get(p.id)) }))
-      .filter((s) => s.m.score >= 40)
+      .filter((s) => s.m.motivos.includes("Mesma função"))
       .sort((a, b) => b.m.score - a.m.score)
       .slice(0, 10);
   }

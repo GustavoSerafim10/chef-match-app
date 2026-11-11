@@ -42,6 +42,7 @@ export default async function CotacaoPage({ params, searchParams }: { params: Pr
 
   const ordem = sp.ordem === "prazo" || sp.ordem === "nota" ? sp.ordem : "preco";
   const ordenadas = [...propostas].sort((a, b) => {
+    if (a.aceita !== b.aceita) return a.aceita ? -1 : 1; // pedido aprovado sempre no topo
     if (ordem === "prazo") return a.prazo_dias - b.prazo_dias || a.preco_total - b.preco_total;
     if (ordem === "nota") return Number(repMap.get(b.fornecedor_id)?.media ?? 0) - Number(repMap.get(a.fornecedor_id)?.media ?? 0);
     return a.preco_total - b.preco_total;

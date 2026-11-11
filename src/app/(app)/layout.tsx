@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Nav } from "@/components/nav";
+import { Nav, NavMobile } from "@/components/nav";
 import { Avatar, Logo } from "@/components/ui";
 import { getContexto } from "@/lib/auth";
 import { ROLE_LABEL } from "@/lib/constants";
@@ -26,6 +26,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         </div>
       </header>
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-28 pt-6 sm:px-6 md:pb-12">{children}</main>
+      <NavMobile role={profile.role} />
     </div>
   );
 }

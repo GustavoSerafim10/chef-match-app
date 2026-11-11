@@ -46,14 +46,17 @@ function Icon({ name }: { name: string }) {
   );
 }
 
-export function Nav({ role }: { role: Role }) {
+function useMenu(role: Role) {
   const path = usePathname();
-  const items = MENUS[role];
   const ativo = (href: string) => (href === "/painel" ? path === href : path.startsWith(href));
+  return { items: MENUS[role], ativo };
+}
 
+/** Menu do topo (computador). */
+export function Nav({ role }: { role: Role }) {
+  const { items, ativo } = useMenu(role);
   return (
-    <>
-      <nav aria-label="Menu" className="hidden items-center gap-1 md:flex">
+    <nav aria-label="Menu" className="hidden items-center gap-1 md:flex">
         {items.map((it) => (
           <Link
             key={it.href}
@@ -64,7 +67,14 @@ export function Nav({ role }: { role: Role }) {
             {it.label}
           </Link>
         ))}
-      </nav>
+    </nav>
+  );
+}
+
+/** Barra inferior (celular). Fica fora do cabeçalho: o backdrop-blur dele prenderia o position:fixed. */
+export function NavMobile({ role }: { role: Role }) {
+  const { items, ativo } = useMenu(role);
+  return (
       <nav
         aria-label="Menu do app"
         className="fixed inset-x-0 bottom-0 z-40 grid border-t border-line bg-ink/95 backdrop-blur md:hidden"
@@ -85,6 +95,5 @@ export function Nav({ role }: { role: Role }) {
           </Link>
         ))}
       </nav>
-    </>
   );
 }

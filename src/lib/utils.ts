@@ -29,6 +29,14 @@ export function iniciais(nome: string): string {
     .join("");
 }
 
+/** Lê "1.234,50", "836,50", "836.50" ou "R$ 90" como número. */
+export function numeroBR(valor: string): number {
+  let s = valor.replace(/[^\d.,]/g, "");
+  if (s.includes(",")) s = s.replace(/\./g, "").replace(",", ".");
+  else if ((s.match(/\./g) ?? []).length > 1 || /\.\d{3}$/.test(s)) s = s.replace(/\./g, "");
+  return Number(s);
+}
+
 export function texto(fd: FormData, campo: string): string {
   return String(fd.get(campo) ?? "").trim();
 }
