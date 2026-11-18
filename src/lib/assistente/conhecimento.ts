@@ -92,6 +92,7 @@ Toque e veja o app funcionando
 Este é o roteiro das telas, na mesma ordem do app. Para usar de verdade, abra o app e escolha um perfil no modo demonstração.
 O app já está no ar
 Entre com um clique, sem cadastro : escolha testar como 🍽️ restaurante, 👨‍🍳 profissional ou 🚚 fornecedor. As contas de demonstração já vêm com vagas, candidatos, cotações e avaliações de Brasília.
+Aponte a câmera e teste junto 
 Abrir o app de verdade ↗ 
 01 Início Profissional, empresa ou fornecedor 
 02 Painel do profissional Disponível hoje, convites e vagas 
@@ -280,7 +281,11 @@ Uma plataforma. Quatro pilares. Um mercado inteiro conectado.
 O Chef's Match não é só um aplicativo de vagas ou um catálogo de fornecedores. É uma plataforma de desenvolvimento, conexão e negócios para a gastronomia brasileira, começando por Brasília.
 Abrir o app ↗ Voltar ao topo 
 Chef's Match · A gastronomia se conecta aqui. 
-Projeto acadêmico · Brasília, DF · 2026. Preços, metas e projeções são hipóteses para validação.
+Projeto acadêmico · Brasília, DF · 2026. Preços, metas e projeções são hipóteses para validação. 
+💬 Dúvidas? 
+Assistente Chef's Match Pergunte o que quiser sobre o projeto 
+× 
+Enviar
 
 # Roteiro da apresentação
 # Chef's Match: roteiro da apresentação
@@ -389,4 +394,6 @@ Passagem: "[Integrante 4] fecha com a estratégia e a implantação."
 - [ ] Compartilhar o site e os slides com o grupo (botão **Share** de cada página)
 - [ ] Testar o link do protótipo no computador da sala
 - [ ] Trocar \`[Integrantes]\`, \`[Curso]\` e \`[Nome do professor]\` na capa dos slides
-- [ ] Ensaiar a demonstração ao vivo pelo menos 2 vezes`;
+- [ ] Ensaiar a demonstração ao vivo pelo menos 2 vezes
+- [ ] Testar o QR code do slide 8 com a câmera de um celular
+- [ ] 10 minutos antes: abrir o site, clicar em **Dúvidas?** e fazer uma pergunta para conferir se a IA está respondendo (se não estiver, o chat mostra as respostas prontas sozinho)`;
