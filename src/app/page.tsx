@@ -24,7 +24,7 @@ export default async function Home({ searchParams }: { searchParams: SP }) {
 
   return (
     <main className="relative flex flex-1 flex-col overflow-hidden">
-      <FundoVivo foto="/img/cozinha-chef.webp" opacidade={0.5} brasas={36} />
+      <FundoVivo foto="/img/cozinha-chef.webp" opacidade={0.75} brasas={36} />
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -right-40 -top-40 h-[560px] w-[560px] rounded-full"

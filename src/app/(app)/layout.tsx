@@ -9,7 +9,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const { profile } = await getContexto();
   return (
     <div className="flex flex-1 flex-col">
-      <FundoVivo foto="/img/bancada.webp" opacidade={0.32} brasas={22} />
+      <FundoVivo foto="/img/bancada.webp" opacidade={0.6} brasas={22} />
       <header className="sticky top-0 z-30 border-b border-white/5 bg-ink/60 backdrop-blur-md">
         <div className="mx-auto flex h-16 w-full max-w-5xl items-center gap-4 px-4 sm:px-6">
           <Link href="/painel" aria-label="Chef's Match, início">

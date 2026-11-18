@@ -19,7 +19,7 @@ export default async function Cadastro({ searchParams }: { searchParams: SP }) {
 
   return (
     <>
-    <FundoVivo foto="/img/cozinha-chef.webp" opacidade={0.38} brasas={22} />
+    <FundoVivo foto="/img/cozinha-chef.webp" opacidade={0.62} brasas={22} />
     <main className="entrada mx-auto grid w-full max-w-lg flex-1 content-center gap-8 px-4 py-10">
       <Link href="/">
         <Logo />

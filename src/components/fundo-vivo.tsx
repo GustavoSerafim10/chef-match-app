@@ -86,7 +86,7 @@ export function FundoVivo({ foto, opacidade = 0.4, brasas = 30 }: { foto: string
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
       <div className="fundo-foto absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${foto})`, opacity: opacidade }} />
-      <div className="absolute inset-0 bg-[radial-gradient(900px_600px_at_100%_-10%,rgb(240_120_50/.18),transparent_70%),radial-gradient(700px_500px_at_-10%_70%,rgb(240_120_50/.12),transparent_70%),linear-gradient(180deg,rgb(26_22_18/.35),rgb(26_22_18/.65)_60%,rgb(26_22_18/.85))]" />
+      <div className="absolute inset-0 bg-[radial-gradient(900px_600px_at_100%_-10%,rgb(240_120_50/.18),transparent_70%),radial-gradient(700px_500px_at_-10%_70%,rgb(240_120_50/.12),transparent_70%),linear-gradient(180deg,rgb(26_22_18/.12),rgb(26_22_18/.32)_55%,rgb(26_22_18/.55))]" />
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
     </div>
   );
