@@ -18,7 +18,7 @@ export function DemoButtons({ titulo = "Testar sem cadastro" }: { titulo?: strin
             <input type="hidden" name="perfil" value={p.v} />
             <SubmitButton
               pendingText="Entrando…"
-              className="flex h-full w-full cursor-pointer items-center gap-3 rounded-2xl border-2 border-line bg-ink-2 p-4 text-left transition hover:border-orange disabled:opacity-60"
+              className="vidro clicavel flex h-full w-full cursor-pointer items-center gap-3 rounded-2xl !border-orange/30 hover:!border-orange/70 p-4 text-left disabled:opacity-60"
             >
               <span className="text-2xl" aria-hidden="true">
                 {p.icone}

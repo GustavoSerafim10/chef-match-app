@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Empty, MatchBadge, Notice, PageTitle, Pill, Stars, TipoPill, btnSm, card, lerAvisos, type SP } from "@/components/ui";
+import { Empty, MatchBadge, Notice, PageTitle, Pill, Stars, TipoPill, btnSm, card, filtroAtivo, filtroInativo, lerAvisos, type SP } from "@/components/ui";
 import { getContexto } from "@/lib/auth";
 import { FUNCOES } from "@/lib/constants";
 import type { Profile, Reputacao, Vaga } from "@/lib/types";
@@ -35,7 +35,7 @@ export default async function Vagas({ searchParams }: { searchParams: SP }) {
         ) : (
           <div className="grid gap-2">
             {vagas.map((v) => (
-              <Link key={v.id} href={`/vagas/${v.id}`} className={`${card} flex items-center justify-between gap-3 py-4 hover:border-muted`}>
+              <Link key={v.id} href={`/vagas/${v.id}`} className={`${card} clicavel flex items-center justify-between gap-3 py-4`}>
                 <span>
                   <span className="flex items-center gap-2 font-semibold">
                     {v.funcao} {v.urgente && <Pill tone="bad">Hoje</Pill>}
@@ -75,15 +75,15 @@ export default async function Vagas({ searchParams }: { searchParams: SP }) {
       <PageTitle eyebrow="Vagas perto de você" title="Oportunidades">
         Ordenadas por compatibilidade com o seu perfil. Vagas para hoje aparecem primeiro.
       </PageTitle>
-      <nav aria-label="Filtrar por função" className="-mx-4 mb-5 flex gap-2 overflow-x-auto px-4 pb-1">
-        <Link href="/vagas" className={`shrink-0 rounded-full px-3.5 py-1.5 text-sm font-semibold ${!filtro ? "bg-orange text-ink" : "bg-ink-3 text-soft"}`}>
+      <nav aria-label="Filtrar por função" className="sem-barra -mx-4 mb-5 flex gap-2 overflow-x-auto px-4 py-2">
+        <Link href="/vagas" className={`shrink-0 rounded-full px-3.5 py-1.5 text-sm font-semibold transition-all duration-300 ${!filtro ? filtroAtivo : filtroInativo}`}>
           Todas
         </Link>
         {FUNCOES.map((f) => (
           <Link
             key={f}
             href={`/vagas?funcao=${encodeURIComponent(f)}`}
-            className={`shrink-0 rounded-full px-3.5 py-1.5 text-sm font-semibold ${filtro === f ? "bg-orange text-ink" : "bg-ink-3 text-soft"}`}
+            className={`shrink-0 rounded-full px-3.5 py-1.5 text-sm font-semibold transition-all duration-300 ${filtro === f ? filtroAtivo : filtroInativo}`}
           >
             {f}
           </Link>
@@ -96,7 +96,7 @@ export default async function Vagas({ searchParams }: { searchParams: SP }) {
           {lista.map(({ v, m }) => {
             const r = repMap.get(v.empresa_id);
             return (
-              <Link key={v.id} href={`/vagas/${v.id}`} className={`${card} grid gap-2 hover:border-muted`}>
+              <Link key={v.id} href={`/vagas/${v.id}`} className={`${card} clicavel grid gap-2`}>
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <p className="font-bold">{v.funcao}</p>

@@ -3,18 +3,20 @@ import type { ReactNode } from "react";
 import type { TipoVaga } from "@/lib/types";
 import { TIPO_LABEL } from "@/lib/constants";
 import { iniciais } from "@/lib/utils";
+import { corDoMatch } from "@/lib/visual";
+import { Contador } from "./contador";
 
 export const btn =
   "brilho inline-flex items-center justify-center gap-2 rounded-full bg-orange px-5 py-3 font-bold text-ink transition hover:bg-orange-hi disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer";
 export const btnSm =
   "brilho inline-flex items-center justify-center gap-1.5 rounded-full bg-orange px-4 py-2 text-sm font-bold text-ink transition hover:bg-orange-hi disabled:opacity-50 cursor-pointer";
 export const btnGhost =
-  "inline-flex items-center justify-center gap-2 rounded-full border-2 border-line px-5 py-3 font-bold text-paper transition hover:border-muted cursor-pointer";
+  "inline-flex items-center justify-center gap-2 rounded-full border-2 border-white/25 bg-ink/40 px-5 py-3 font-bold text-paper backdrop-blur transition hover:border-orange hover:shadow-[0_0_18px_-4px_rgb(255_107_44/.6)] cursor-pointer";
 export const btnGhostSm =
-  "inline-flex items-center justify-center gap-1.5 rounded-full border-2 border-line px-4 py-2 text-sm font-bold text-paper transition hover:border-muted cursor-pointer";
-export const card = "vidro rounded-2xl p-5 hover:border-orange/45";
+  "inline-flex items-center justify-center gap-1.5 rounded-full border-2 border-white/25 bg-ink/40 px-4 py-2 text-sm font-bold text-paper backdrop-blur transition hover:border-orange cursor-pointer";
+export const card = "vidro rounded-2xl p-5";
 export const input =
-  "w-full rounded-xl border border-line bg-ink px-4 py-3 text-paper placeholder:text-muted/70 focus:border-orange focus:outline-none";
+  "w-full rounded-xl border border-white/10 bg-[rgb(24_22_20/.72)] px-4 py-3 text-paper backdrop-blur placeholder:text-muted/70 transition focus:border-orange focus:shadow-[0_0_0_3px_rgb(255_107_44/.2)] focus:outline-none";
 export const label = "text-xs font-bold uppercase tracking-wider text-muted";
 
 export function Logo({ className = "" }: { className?: string }) {
@@ -50,7 +52,7 @@ const tipoCor: Record<TipoVaga, string> = {
 
 export function TipoPill({ tipo }: { tipo: TipoVaga }) {
   return (
-    <span className={`rounded-full px-2.5 py-1 font-mono text-[11px] font-semibold uppercase ${tipoCor[tipo]}`}>
+    <span className={`selo-aceso rounded-full px-2.5 py-1 font-mono text-[11px] font-semibold uppercase ${tipoCor[tipo]}`}>
       {TIPO_LABEL[tipo]}
     </span>
   );
@@ -65,7 +67,7 @@ export function Pill({ children, tone = "neutral" }: { children: ReactNode; tone
     bad: "bg-bad/15 text-bad",
   };
   return (
-    <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 font-mono text-[11px] font-semibold uppercase ${cores[tone]}`}>
+    <span className={`${tone === "neutral" ? "" : "selo-aceso "}inline-flex items-center gap-1 rounded-full px-2.5 py-1 font-mono text-[11px] font-semibold uppercase ${cores[tone]}`}>
       {children}
     </span>
   );
@@ -96,9 +98,33 @@ export function Stars({ media, total }: { media?: number | null; total?: number 
   );
 }
 
-export function MatchBadge({ score }: { score: number }) {
+/** Anel de compatibilidade: o arco cresce até a porcentagem, verde a partir de 70%. */
+export function MatchBadge({ score, size = 48 }: { score: number; size?: number }) {
+  const r = 20;
+  const c = 2 * Math.PI * r;
+  const cor = corDoMatch(score);
   return (
-    <span className="rounded-lg bg-ink px-2 py-1 font-mono text-sm font-semibold text-orange ring-1 ring-line">{score}%</span>
+    <span className="relative inline-grid shrink-0 place-items-center" style={{ width: size, height: size }} title={`${score}% de compatibilidade`}>
+      <svg viewBox="0 0 48 48" width={size} height={size} className="-rotate-90" aria-hidden="true">
+        <circle cx="24" cy="24" r={r} fill="rgb(14 13 12 / .6)" stroke="rgb(255 255 255 / .1)" strokeWidth="4" />
+        <circle
+          cx="24"
+          cy="24"
+          r={r}
+          fill="none"
+          stroke={cor}
+          strokeWidth="4"
+          strokeLinecap="round"
+          strokeDasharray={c}
+          strokeDashoffset={c * (1 - score / 100)}
+          className="anel-match"
+          style={{ filter: `drop-shadow(0 0 4px ${cor})`, ["--anel" as string]: c }}
+        />
+      </svg>
+      <span className="absolute font-mono text-[11px] font-bold" style={{ color: cor }}>
+        {score}%
+      </span>
+    </span>
   );
 }
 
@@ -128,11 +154,17 @@ export function Empty({ title, children, href, cta }: { title: string; children?
   );
 }
 
-export function Stat({ value, label: rotulo }: { value: ReactNode; label: string }) {
+export function Stat({ value, label: rotulo }: { value: string | number; label: string }) {
   return (
-    <div className="rounded-2xl border border-line bg-ink-2 p-4">
-      <p className="font-display text-4xl font-bold leading-none text-orange">{value}</p>
-      <p className="mt-1.5 text-sm text-muted">{rotulo}</p>
+    <div className="vidro relative overflow-hidden rounded-2xl p-4">
+      <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange/70 to-transparent" />
+      <p className="font-display text-4xl font-bold leading-none text-orange [text-shadow:0_0_18px_rgb(255_107_44/.55)]">
+        <span className="sr-only">{value}</span>
+        <span aria-hidden="true">
+          <Contador valor={value} />
+        </span>
+      </p>
+      <p className="mt-1.5 text-sm text-soft">{rotulo}</p>
     </div>
   );
 }
@@ -153,3 +185,7 @@ export async function lerAvisos(searchParams: SP) {
   const um = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
   return { erro: um(sp.erro), msg: um(sp.msg), sp };
 }
+
+/** Pílulas de filtro: a selecionada brilha em laranja. */
+export const filtroAtivo = "bg-orange text-ink shadow-[0_0_15px_rgb(255_107_44/.45)]";
+export const filtroInativo = "border border-white/10 bg-[rgb(24_22_20/.72)] text-soft backdrop-blur hover:border-orange/50 hover:text-paper";

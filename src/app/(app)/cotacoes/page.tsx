@@ -64,7 +64,7 @@ export default async function Cotacoes({ searchParams }: { searchParams: SP }) {
           ) : (
             <div className="grid gap-2">
               {cotacoes.map((c) => (
-                <Link key={c.id} href={`/cotacoes/${c.id}`} className={`${card} flex items-center justify-between gap-3 py-4 hover:border-muted`}>
+                <Link key={c.id} href={`/cotacoes/${c.id}`} className={`${card} clicavel flex items-center justify-between gap-3 py-4`}>
                   <span>
                     <span className="block font-semibold">{c.titulo}</span>
                     <span className="text-sm text-muted">{dataCurta(c.created_at)}</span>
@@ -109,7 +109,7 @@ export default async function Cotacoes({ searchParams }: { searchParams: SP }) {
         ) : (
           <div className="grid gap-3 sm:grid-cols-2">
             {cotacoes.map((c) => (
-              <Link key={c.id} href={`/cotacoes/${c.id}`} className={`${card} grid gap-1 hover:border-muted`}>
+              <Link key={c.id} href={`/cotacoes/${c.id}`} className={`${card} clicavel grid gap-1`}>
                 <div className="flex items-center justify-between gap-2">
                   <p className="font-bold">{c.titulo}</p>
                   {!estado.has(c.id) ? (

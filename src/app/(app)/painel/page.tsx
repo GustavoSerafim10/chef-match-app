@@ -69,12 +69,13 @@ export default async function Painel({ searchParams }: { searchParams: SP }) {
           <Stat value={rep?.total ? Number(rep.media).toFixed(1).replace(".", ",") : "–"} label="sua nota" />
         </div>
 
+        <div className="lg:grid lg:grid-cols-3 lg:items-start lg:gap-6">
         {convites.length > 0 && (
-          <>
+          <section>
             <SectionTitle>Convites para você</SectionTitle>
             <div className="grid gap-3">
               {convites.map((c) => (
-                <div key={c.id} className={`${card} grid gap-3 border-orange/60`}>
+                <div key={c.id} className={`${card} grid gap-3 !border-orange shadow-[0_0_0_1px_rgb(255_107_44/.5),0_0_34px_-8px_rgb(255_107_44/.8)]`}>
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <p className="font-bold">
                       {c.vaga.empresa.nome} te convidou: {c.vaga.funcao}
@@ -104,9 +105,10 @@ export default async function Painel({ searchParams }: { searchParams: SP }) {
                 </div>
               ))}
             </div>
-          </>
+          </section>
         )}
 
+        <section>
         <SectionTitle action={<Link href="/vagas" className="text-sm font-bold text-orange">Ver todas</Link>}>
           Vagas para você
         </SectionTitle>
@@ -117,7 +119,7 @@ export default async function Painel({ searchParams }: { searchParams: SP }) {
         ) : (
           <div className="grid gap-3">
             {sugestoes.map(({ v, m }) => (
-              <Link key={v.id} href={`/vagas/${v.id}`} className={`${card} grid gap-2 transition hover:border-muted`}>
+              <Link key={v.id} href={`/vagas/${v.id}`} className={`${card} clicavel grid gap-2`}>
                 <div className="flex items-center justify-between gap-2">
                   <p className="font-bold">{v.funcao}</p>
                   <div className="flex items-center gap-2">
@@ -135,14 +137,16 @@ export default async function Painel({ searchParams }: { searchParams: SP }) {
             ))}
           </div>
         )}
+        </section>
 
+        <section>
         <SectionTitle>Minhas candidaturas</SectionTitle>
         {minhas.length === 0 ? (
           <Empty title="Você ainda não se candidatou" href="/vagas" cta="Explorar vagas" />
         ) : (
           <div className="grid gap-2">
             {minhas.map((c) => (
-              <Link key={c.id} href={`/vagas/${c.vaga_id}`} className={`${card} flex items-center justify-between gap-3 py-4`}>
+              <Link key={c.id} href={`/vagas/${c.vaga_id}`} className={`${card} clicavel flex items-center justify-between gap-3 py-4`}>
                 <span>
                   <span className="block font-semibold">{c.vaga.funcao}</span>
                   <span className="text-sm text-muted">
@@ -156,6 +160,8 @@ export default async function Painel({ searchParams }: { searchParams: SP }) {
             ))}
           </div>
         )}
+        </section>
+        </div>
       </>
     );
   }
@@ -185,9 +191,10 @@ export default async function Painel({ searchParams }: { searchParams: SP }) {
 
         <Link
           href="/vagas/nova?urgente=1"
-          className="brilho group flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-br from-orange-hi via-orange to-[#c9541e] p-5 text-ink transition hover:brightness-110"
+          className="radar brilho group flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-br from-orange-hi via-orange to-[#c9541e] p-5 text-ink transition hover:brightness-110"
         >
-          <span>
+          <span aria-hidden="true" className="reflexo" />
+          <span className="relative">
             <span className="block font-display text-3xl font-bold uppercase leading-none">⚡ Preciso de alguém hoje</span>
             <span className="mt-1 block text-sm text-ink/80">
               {dispData?.length ?? 0} profissionais marcaram que estão disponíveis hoje
@@ -210,11 +217,11 @@ export default async function Painel({ searchParams }: { searchParams: SP }) {
             Publique uma vaga fixa, temporária ou um extra para hoje.
           </Empty>
         ) : (
-          <div className="grid gap-2">
+          <div className="grid gap-2 sm:grid-cols-2">
             {vagas.slice(0, 8).map((v) => {
               const novos = v.candidaturas.filter((c) => c.status === "pendente").length;
               return (
-                <Link key={v.id} href={`/vagas/${v.id}`} className={`${card} flex items-center justify-between gap-3 py-4 transition hover:border-muted`}>
+                <Link key={v.id} href={`/vagas/${v.id}`} className={`${card} clicavel flex items-center justify-between gap-3 py-4`}>
                   <span>
                     <span className="flex items-center gap-2 font-semibold">
                       {v.funcao} {v.urgente && <Pill tone="bad">Hoje</Pill>}
@@ -238,9 +245,9 @@ export default async function Painel({ searchParams }: { searchParams: SP }) {
             Liste os insumos da semana e receba propostas de fornecedores.
           </Empty>
         ) : (
-          <div className="grid gap-2">
+          <div className="grid gap-2 sm:grid-cols-2">
             {cotacoes.map((c) => (
-              <Link key={c.id} href={`/cotacoes/${c.id}`} className={`${card} flex items-center justify-between py-4`}>
+              <Link key={c.id} href={`/cotacoes/${c.id}`} className={`${card} clicavel flex items-center justify-between py-4`}>
                 <span className="font-semibold">{c.titulo}</span>
                 <Pill tone={c.propostas.length ? "orange" : "neutral"}>
                   {c.propostas.length} proposta{c.propostas.length === 1 ? "" : "s"}
@@ -285,7 +292,7 @@ export default async function Painel({ searchParams }: { searchParams: SP }) {
       ) : (
         <div className="grid gap-3">
           {abertas.map((c) => (
-            <Link key={c.id} href={`/cotacoes/${c.id}`} className={`${card} grid gap-1 transition hover:border-muted`}>
+            <Link key={c.id} href={`/cotacoes/${c.id}`} className={`${card} clicavel grid gap-1`}>
               <div className="flex items-center justify-between gap-2">
                 <p className="font-bold">{c.titulo}</p>
                 {c.categoria && <Pill>{c.categoria}</Pill>}

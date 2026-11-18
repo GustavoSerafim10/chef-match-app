@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { criarProduto, removerProduto } from "@/app/actions/app";
 import { SubmitButton } from "@/components/submit-button";
-import { Empty, Notice, PageTitle, Pill, SectionTitle, Stars, btn, card, input, label, lerAvisos, type SP } from "@/components/ui";
+import { Empty, Notice, PageTitle, Pill, SectionTitle, Stars, btn, card, filtroAtivo, filtroInativo, input, label, lerAvisos, type SP } from "@/components/ui";
 import { getContexto } from "@/lib/auth";
 import { CATEGORIAS } from "@/lib/constants";
 import type { Produto, Profile, Reputacao } from "@/lib/types";
@@ -101,15 +101,15 @@ export default async function Produtos({ searchParams }: { searchParams: SP }) {
       <PageTitle eyebrow="Fornecedores" title="Catálogo">
         Fornecedores de Brasília e o que eles vendem. Achou? Peça uma cotação.
       </PageTitle>
-      <nav aria-label="Filtrar por categoria" className="-mx-4 mb-5 flex gap-2 overflow-x-auto px-4 pb-1">
-        <Link href="/produtos" className={`shrink-0 rounded-full px-3.5 py-1.5 text-sm font-semibold ${!categoria ? "bg-orange text-ink" : "bg-ink-3 text-soft"}`}>
+      <nav aria-label="Filtrar por categoria" className="sem-barra -mx-4 mb-5 flex gap-2 overflow-x-auto px-4 py-2">
+        <Link href="/produtos" className={`shrink-0 rounded-full px-3.5 py-1.5 text-sm font-semibold transition-all duration-300 ${!categoria ? filtroAtivo : filtroInativo}`}>
           Todas
         </Link>
         {CATEGORIAS.map((c) => (
           <Link
             key={c}
             href={`/produtos?categoria=${encodeURIComponent(c)}`}
-            className={`shrink-0 rounded-full px-3.5 py-1.5 text-sm font-semibold ${categoria === c ? "bg-orange text-ink" : "bg-ink-3 text-soft"}`}
+            className={`shrink-0 rounded-full px-3.5 py-1.5 text-sm font-semibold transition-all duration-300 ${categoria === c ? filtroAtivo : filtroInativo}`}
           >
             {c}
           </Link>

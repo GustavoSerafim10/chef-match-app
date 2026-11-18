@@ -2,14 +2,15 @@ import Link from "next/link";
 import { cadastrar } from "@/app/actions/auth";
 import { Logo, Notice, btn, input, label, lerAvisos, type SP } from "@/components/ui";
 import { SubmitButton } from "@/components/submit-button";
+import { FundoVivo } from "@/components/fundo-vivo";
 import { FUNCOES, REGIOES } from "@/lib/constants";
 
 export const metadata = { title: "Criar conta · Chef's Match" };
 
 const opcoes = [
-  { v: "profissional", t: "Quero trabalhar", d: "Vagas, extras e cursos. Sempre grátis." },
-  { v: "empresa", t: "Preciso contratar", d: "Restaurante, bar, hotel, padaria…" },
-  { v: "fornecedor", t: "Sou fornecedor", d: "Catálogo e cotações de restaurantes." },
+  { v: "profissional", i: "👨‍🍳", t: "Quero trabalhar", d: "Vagas, extras e cursos. Sempre grátis." },
+  { v: "empresa", i: "🍽️", t: "Preciso contratar", d: "Restaurante, bar, hotel, padaria…" },
+  { v: "fornecedor", i: "🚚", t: "Sou fornecedor", d: "Catálogo e cotações de restaurantes." },
 ];
 
 export default async function Cadastro({ searchParams }: { searchParams: SP }) {
@@ -17,7 +18,9 @@ export default async function Cadastro({ searchParams }: { searchParams: SP }) {
   const rolePadrao = typeof sp.role === "string" ? sp.role : "profissional";
 
   return (
-    <main className="mx-auto grid w-full max-w-lg flex-1 content-center gap-8 px-4 py-10">
+    <>
+    <FundoVivo foto="/img/cozinha-chef.webp" opacidade={0.38} brasas={22} />
+    <main className="entrada mx-auto grid w-full max-w-lg flex-1 content-center gap-8 px-4 py-10">
       <Link href="/">
         <Logo />
       </Link>
@@ -32,15 +35,18 @@ export default async function Cadastro({ searchParams }: { searchParams: SP }) {
           {opcoes.map((o) => (
             <label
               key={o.v}
-              className="flex cursor-pointer items-start gap-3 rounded-2xl border-2 border-line bg-ink-2 p-4 transition has-checked:border-orange has-checked:bg-orange/10"
+              className="vidro clicavel flex cursor-pointer items-center gap-3 rounded-2xl !border-2 !border-white/10 p-4 has-checked:!border-orange has-checked:bg-orange/10 has-checked:shadow-[0_0_28px_-8px_rgb(255_107_44/.8)]"
             >
               <input
                 type="radio"
                 name="role"
                 value={o.v}
                 defaultChecked={o.v === rolePadrao}
-                className="peer mt-1 accent-orange"
+                className="peer accent-orange"
               />
+              <span className="papel-icone text-2xl" aria-hidden="true">
+                {o.i}
+              </span>
               <span>
                 <span className="block font-bold">{o.t}</span>
                 <span className="text-sm text-muted">{o.d}</span>
@@ -64,7 +70,7 @@ export default async function Cadastro({ searchParams }: { searchParams: SP }) {
               ))}
             </select>
           </label>
-          <label className="grid gap-1.5">
+          <label className="so-profissional gap-1.5">
             <span className={label}>Função (se for profissional)</span>
             <select id="funcao" name="funcao" className={input} defaultValue="">
               <option value="">Selecione</option>
@@ -98,5 +104,6 @@ export default async function Cadastro({ searchParams }: { searchParams: SP }) {
         </Link>
       </p>
     </main>
+    </>
   );
 }

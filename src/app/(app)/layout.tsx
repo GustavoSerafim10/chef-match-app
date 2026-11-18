@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FundoVivo } from "@/components/fundo-vivo";
 import { Nav, NavMobile } from "@/components/nav";
 import { Avatar, Logo } from "@/components/ui";
 import { getContexto } from "@/lib/auth";
@@ -8,7 +9,8 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const { profile } = await getContexto();
   return (
     <div className="flex flex-1 flex-col">
-      <header className="sticky top-0 z-30 border-b border-line bg-ink/95 backdrop-blur">
+      <FundoVivo foto="/img/bancada.webp" opacidade={0.32} brasas={22} />
+      <header className="sticky top-0 z-30 border-b border-white/5 bg-ink/60 backdrop-blur-md">
         <div className="mx-auto flex h-16 w-full max-w-5xl items-center gap-4 px-4 sm:px-6">
           <Link href="/painel" aria-label="Chef's Match, início">
             <Logo />
@@ -25,7 +27,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           </div>
         </div>
       </header>
-      <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-28 pt-6 sm:px-6 md:pb-12">{children}</main>
+      <main className="entrada mx-auto w-full max-w-5xl flex-1 px-4 pb-28 pt-6 sm:px-6 md:pb-12">{children}</main>
       <NavMobile role={profile.role} />
     </div>
   );

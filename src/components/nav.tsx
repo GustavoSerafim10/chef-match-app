@@ -56,13 +56,13 @@ function useMenu(role: Role) {
 export function Nav({ role }: { role: Role }) {
   const { items, ativo } = useMenu(role);
   return (
-    <nav aria-label="Menu" className="hidden items-center gap-1 md:flex">
+    <nav aria-label="Menu" className="hidden items-center gap-1 rounded-full border border-white/10 bg-ink/50 p-1 backdrop-blur md:flex">
         {items.map((it) => (
           <Link
             key={it.href}
             href={it.href}
             aria-current={ativo(it.href) ? "page" : undefined}
-            className="rounded-full px-3.5 py-2 text-sm font-semibold text-soft transition hover:bg-ink-3 hover:text-paper aria-[current=page]:bg-ink-3 aria-[current=page]:text-orange"
+            className="rounded-full px-3.5 py-1.5 text-sm font-semibold text-soft transition-all duration-300 hover:bg-white/5 hover:text-paper aria-[current=page]:bg-orange/15 aria-[current=page]:text-orange aria-[current=page]:shadow-[0_0_16px_-2px_rgb(255_107_44/.55),inset_0_0_0_1px_rgb(255_107_44/.45)]"
           >
             {it.label}
           </Link>
@@ -88,7 +88,7 @@ export function NavMobile({ role }: { role: Role }) {
             key={it.href}
             href={it.href}
             aria-current={ativo(it.href) ? "page" : undefined}
-            className="grid justify-items-center gap-1 pt-2.5 text-[11px] font-semibold text-muted aria-[current=page]:text-orange"
+            className="grid justify-items-center gap-1 pt-2.5 text-[11px] font-semibold text-muted transition-colors duration-300 aria-[current=page]:text-orange aria-[current=page]:[filter:drop-shadow(0_0_6px_rgb(255_107_44/.8))]"
           >
             <Icon name={it.icon} />
             {it.label}

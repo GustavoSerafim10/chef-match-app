@@ -51,16 +51,182 @@ body::before {
     radial-gradient(700px 500px at -10% 60%, rgb(240 120 50 / 0.08), transparent 70%);
 }
 
-/* Cartão de vidro com brilho laranja no hover */
+/* Cartão de vidro fosco: a foto do fundo aparece sutil por trás */
 @utility vidro {
-  background: linear-gradient(180deg, rgb(32 29 26 / 0.9), rgb(22 20 18 / 0.9));
-  border: 1px solid var(--color-line);
+  background: rgb(24 22 20 / 0.72);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(255 255 255 / 0.08);
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.04),
+    inset 0 1px 0 rgb(255 255 255 / 0.05),
     0 20px 40px -24px rgb(0 0 0 / 0.8);
   transition:
-    border-color 0.2s,
-    box-shadow 0.2s;
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Card clicável: sobe, acende a borda e ganha sombra luminosa */
+@utility clicavel {
+  &:hover {
+    transform: translateY(-3px);
+    border-color: rgb(255 107 44 / 0.45);
+    box-shadow: 0 10px 30px -10px rgb(255 107 44 / 0.35);
+  }
+}
+
+/* No celular o desfoque é mais leve (desempenho) */
+@media (max-width: 960px) {
+  .vidro {
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+}
+
+/* Entrada escalonada (fade-up) dos blocos de cada tela */
+@keyframes subir {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+.entrada > * {
+  animation: subir 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.entrada > :nth-child(2) { animation-delay: 60ms; }
+.entrada > :nth-child(3) { animation-delay: 120ms; }
+.entrada > :nth-child(4) { animation-delay: 180ms; }
+.entrada > :nth-child(5) { animation-delay: 240ms; }
+.entrada > :nth-child(6) { animation-delay: 300ms; }
+.entrada > :nth-child(7) { animation-delay: 360ms; }
+.entrada > :nth-child(n + 8) { animation-delay: 420ms; }
+
+/* "Preciso de alguém hoje": ondas de radar + brilho metálico a cada 4 s */
+.radar {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+}
+.radar::before,
+.radar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  border: 2px solid rgb(255 138 69 / 0.7);
+  animation: onda 2.4s ease-out infinite;
+  pointer-events: none;
+}
+.radar::after {
+  animation-delay: 1.2s;
+}
+@keyframes onda {
+  from {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.08, 1.35);
+  }
+}
+.reflexo {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+}
+.reflexo::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  left: -60%;
+  background: linear-gradient(100deg, transparent, rgb(255 255 255 / 0.45), transparent);
+  transform: skewX(-18deg);
+  animation: reflexo 4s ease-in-out infinite;
+}
+@keyframes reflexo {
+  0%,
+  70% {
+    left: -60%;
+  }
+  100% {
+    left: 130%;
+  }
+}
+
+/* Disponível hoje: pulso de status */
+@keyframes pulso-status {
+  0%,
+  100% {
+    box-shadow: 0 0 0 1px rgb(63 179 127 / 0.6), 0 0 26px -6px rgb(63 179 127 / 0.6);
+  }
+  50% {
+    box-shadow: 0 0 0 1px rgb(63 179 127 / 0.9), 0 0 44px -4px rgb(63 179 127 / 0.85);
+  }
+}
+.online {
+  animation: pulso-status 2.4s ease-in-out infinite;
+}
+@keyframes ponto {
+  0% {
+    box-shadow: 0 0 0 0 rgb(63 179 127 / 0.7);
+  }
+  100% {
+    box-shadow: 0 0 0 10px rgb(63 179 127 / 0);
+  }
+}
+.ponto-online {
+  animation: ponto 1.6s ease-out infinite;
+}
+
+/* Filtros horizontais sem barra de rolagem nativa */
+.sem-barra {
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+.sem-barra::-webkit-scrollbar {
+  display: none;
+}
+
+/* Cadastro: campo de função só para profissional, aparecendo suave */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+.so-profissional {
+  display: none;
+}
+form:has(input[name="role"][value="profissional"]:checked) .so-profissional {
+  display: grid;
+  animation: aparecer 0.3s ease both;
+}
+.papel-icone {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+label:has(input:checked) .papel-icone {
+  transform: scale(1.15) rotate(-6deg);
+  filter: drop-shadow(0 0 10px rgb(255 107 44 / 0.8));
+}
+
+/* Foto de fundo com zoom lento só no computador */
+@keyframes zoom-lento {
+  to {
+    transform: scale(1.08);
+  }
+}
+@media (min-width: 961px) {
+  .fundo-foto {
+    animation: zoom-lento 22s ease-in-out infinite alternate;
+  }
 }
 
 @utility brilho {
@@ -85,4 +251,19 @@ h3 {
     transition: none !important;
     animation: none !important;
   }
+}
+
+/* Anel de compatibilidade: o arco "enche" ao aparecer */
+@keyframes encher-anel {
+  from {
+    stroke-dashoffset: var(--anel);
+  }
+}
+.anel-match {
+  animation: encher-anel 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* Selos coloridos acesos */
+.selo-aceso {
+  box-shadow: 0 0 12px -3px currentColor, inset 0 0 0 1px color-mix(in srgb, currentColor 45%, transparent);
 }
