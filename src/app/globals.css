@@ -3,9 +3,9 @@
 /* Identidade Chef's Match: preto, laranja e branco. Tema escuro único, por escolha. */
 @theme {
   /* Visual "cozinha à noite" (o mesmo do site): fundo quase preto, vidro e bordas laranja translúcidas */
-  --color-ink: #0e0d0c;
-  --color-ink-2: #181614;
-  --color-ink-3: #262120;
+  --color-ink: #1a1612;
+  --color-ink-2: #221d19;
+  --color-ink-3: #2e2722;
   --color-line: rgb(255 107 44 / 0.2);
   --color-paper: #f6f2ee;
   --color-soft: #d9d2cb;
@@ -25,20 +25,30 @@
   color-scheme: dark;
 }
 
-html,
-body {
+html {
   background: var(--color-ink);
+}
+
+/* body transparente: assim a camada de brilho (body::before, z-index -1) fica visível */
+body {
   color: var(--color-paper);
 }
 
 body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Brilho laranja de fundo numa camada fixa (background-attachment: fixed repinta tudo no Android) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background:
     radial-gradient(900px 600px at 100% -10%, rgb(240 120 50 / 0.14), transparent 70%),
-    radial-gradient(700px 500px at -10% 60%, rgb(240 120 50 / 0.08), transparent 70%),
-    var(--color-ink);
-  background-attachment: fixed;
+    radial-gradient(700px 500px at -10% 60%, rgb(240 120 50 / 0.08), transparent 70%);
 }
 
 /* Cartão de vidro com brilho laranja no hover */
