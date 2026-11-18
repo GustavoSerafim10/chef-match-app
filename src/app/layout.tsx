@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo_Narrow, Figtree, JetBrains_Mono } from "next/font/google";
+import { Assistente } from "@/components/assistente";
 import "./globals.css";
 
 const archivo = Archivo_Narrow({ variable: "--font-archivo-narrow", subsets: ["latin"], weight: ["600", "700"] });
@@ -19,7 +20,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={`${archivo.variable} ${figtree.variable} ${mono.variable} h-full`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <Assistente />
+      </body>
     </html>
   );
 }

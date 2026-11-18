@@ -118,3 +118,17 @@ describe("INSTRUCOES", () => {
     expect(INSTRUCOES.length).toBeLessThan(60000);
   });
 });
+
+import { FAQ } from "./faq";
+
+describe("FAQ", () => {
+  it("tem de 6 a 8 respostas prontas, curtas e preenchidas", () => {
+    expect(FAQ.length).toBeGreaterThanOrEqual(6);
+    expect(FAQ.length).toBeLessThanOrEqual(8);
+    for (const f of FAQ) {
+      expect(f.pergunta.trim()).not.toBe("");
+      expect(f.resposta.trim()).not.toBe("");
+      expect(f.resposta.length).toBeLessThanOrEqual(400);
+    }
+  });
+});
