@@ -92,7 +92,7 @@ Toque e veja o app funcionando
 Este é o roteiro das telas, na mesma ordem do app. Para usar de verdade, abra o app e escolha um perfil no modo demonstração.
 O app já está no ar
 Entre com um clique, sem cadastro : escolha testar como 🍽️ restaurante, 👨‍🍳 profissional ou 🚚 fornecedor. As contas de demonstração já vêm com vagas, candidatos, cotações e avaliações de Brasília.
-Aponte a câmera e teste junto 
+Aponte a câmera 
 Abrir o app de verdade ↗ 
 01 Início Profissional, empresa ou fornecedor 
 02 Painel do profissional Disponível hoje, convites e vagas 
@@ -224,6 +224,7 @@ Custos variáveis (8%) −R$ 778
 Custos fixos −R$ 2.500 
 Resultado operacional simplificado R$ 6.452 
 Retorno do investimento de R$ 3.000 0,5 mês 
+Resultado acumulado em 12 meses
 Ponto de equilíbrio: R$ 2.717/mês 358% 
 Acima do ponto de equilíbrio.
 Simulação acadêmica. Não inclui tributos, salários dos fundadores nem taxas do provedor de pagamento. Receita bruta não é lucro.
