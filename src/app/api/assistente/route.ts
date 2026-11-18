@@ -6,7 +6,8 @@ import { criarLimitador } from "@/lib/assistente/limite";
 export const runtime = "nodejs";
 
 // Flash-Lite primeiro: no plano grátis ele tem bem mais cota por dia que o Flash.
-const MODELOS_PADRAO = ["gemini-flash-lite-latest", "gemini-flash-latest"];
+// Hydrogen por último: é o modelo que o AI Studio mostra como padrão em nov/2026.
+const MODELOS_PADRAO = ["gemini-flash-lite-latest", "gemini-flash-latest", "gemini-4-hydrogen"];
 
 const CORS = {
   "Access-Control-Allow-Origin": "*",

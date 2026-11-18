@@ -24,6 +24,8 @@ export function validarEntrada(corpo: unknown): Resultado {
   const recentes = (mensagens as Mensagem[])
     .slice(-MAX_MENSAGENS)
     .map((m) => ({ papel: m.papel, texto: m.texto.slice(0, 2000) }));
+  // O Gemini exige que a conversa comece por uma mensagem do usuário.
+  while (recentes.length > 1 && recentes[0].papel === "assistente") recentes.shift();
   const ultima = recentes[recentes.length - 1];
 
   if (ultima.papel !== "usuario" || ultima.texto.trim() === "") {

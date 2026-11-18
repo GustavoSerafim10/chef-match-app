@@ -22,12 +22,12 @@ describe("validarEntrada", () => {
   });
 
   it("aceita 500 caracteres e mantém só as 6 últimas mensagens", () => {
-    const msgs = [u("1"), a("2"), u("3"), a("4"), u("5"), a("6"), u("7"), a("8"), u("x".repeat(500))];
+    const msgs = [u("1"), a("2"), u("3"), u("4"), a("5"), u("6"), a("7"), u("x".repeat(500))];
     const r = validarEntrada({ mensagens: msgs });
     expect(r.ok).toBe(true);
     if (r.ok) {
       expect(r.mensagens).toHaveLength(6);
-      expect(r.mensagens[0].texto).toBe("4");
+      expect(r.mensagens[0].texto).toBe("3");
       expect(r.mensagens[5].texto).toBe("x".repeat(500));
       expect(r.cliente).toBe("");
     }
@@ -129,6 +129,18 @@ describe("FAQ", () => {
       expect(f.pergunta.trim()).not.toBe("");
       expect(f.resposta.trim()).not.toBe("");
       expect(f.resposta.length).toBeLessThanOrEqual(400);
+    }
+  });
+});
+
+describe("validarEntrada — histórico", () => {
+  it("nunca começa com mensagem do assistente (Gemini exige user primeiro)", () => {
+    const msgs = [u("1"), a("2"), u("3"), a("4"), u("5"), a("6"), u("7")];
+    const r = validarEntrada({ mensagens: msgs });
+    expect(r.ok).toBe(true);
+    if (r.ok) {
+      expect(r.mensagens[0].papel).toBe("usuario");
+      expect(r.mensagens.map((m) => m.texto)).toEqual(["3", "4", "5", "6", "7"]);
     }
   });
 });

@@ -77,6 +77,13 @@ describe("POST /api/assistente", () => {
     expect(chamadas[1]).toContain("/models/gemini-flash-latest:");
   });
 
+  it("tenta o Gemini 4 Hydrogen por último", async () => {
+    usarFetch(() => new Response("{}", { status: 404 }));
+    await rota.POST(pedido(pergunta()));
+    expect(chamadas).toHaveLength(3);
+    expect(chamadas[2]).toContain("/models/gemini-4-hydrogen:");
+  });
+
   it("respeita GEMINI_MODELOS", async () => {
     vi.stubEnv("GEMINI_MODELOS", "modelo-x, modelo-y");
     usarFetch(okGemini);
