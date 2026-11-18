@@ -185,7 +185,7 @@ export default async function Painel({ searchParams }: { searchParams: SP }) {
 
         <Link
           href="/vagas/nova?urgente=1"
-          className="group flex items-center justify-between gap-4 rounded-2xl bg-orange p-5 text-ink transition hover:bg-orange-hi"
+          className="brilho group flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-br from-orange-hi via-orange to-[#c9541e] p-5 text-ink transition hover:brightness-110"
         >
           <span>
             <span className="block font-display text-3xl font-bold uppercase leading-none">⚡ Preciso de alguém hoje</span>

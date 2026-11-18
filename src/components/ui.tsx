@@ -5,14 +5,14 @@ import { TIPO_LABEL } from "@/lib/constants";
 import { iniciais } from "@/lib/utils";
 
 export const btn =
-  "inline-flex items-center justify-center gap-2 rounded-full bg-orange px-5 py-3 font-bold text-ink transition hover:bg-orange-hi disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer";
+  "brilho inline-flex items-center justify-center gap-2 rounded-full bg-orange px-5 py-3 font-bold text-ink transition hover:bg-orange-hi disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer";
 export const btnSm =
-  "inline-flex items-center justify-center gap-1.5 rounded-full bg-orange px-4 py-2 text-sm font-bold text-ink transition hover:bg-orange-hi disabled:opacity-50 cursor-pointer";
+  "brilho inline-flex items-center justify-center gap-1.5 rounded-full bg-orange px-4 py-2 text-sm font-bold text-ink transition hover:bg-orange-hi disabled:opacity-50 cursor-pointer";
 export const btnGhost =
   "inline-flex items-center justify-center gap-2 rounded-full border-2 border-line px-5 py-3 font-bold text-paper transition hover:border-muted cursor-pointer";
 export const btnGhostSm =
   "inline-flex items-center justify-center gap-1.5 rounded-full border-2 border-line px-4 py-2 text-sm font-bold text-paper transition hover:border-muted cursor-pointer";
-export const card = "rounded-2xl border border-line bg-ink-2 p-5";
+export const card = "vidro rounded-2xl p-5 hover:border-orange/45";
 export const input =
   "w-full rounded-xl border border-line bg-ink px-4 py-3 text-paper placeholder:text-muted/70 focus:border-orange focus:outline-none";
 export const label = "text-xs font-bold uppercase tracking-wider text-muted";
