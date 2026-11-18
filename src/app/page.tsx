@@ -48,7 +48,7 @@ export default async function Home({ searchParams }: { searchParams: SP }) {
           <p className="justify-self-start rounded-full border border-orange/40 bg-ink/50 px-3 py-1 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-orange backdrop-blur">
             FoodTech + RH Tech · Brasília, DF
           </p>
-          <h1 className="font-display text-6xl font-bold uppercase leading-[0.9] [text-shadow:0_2px_24px_rgb(0_0_0/.6)] sm:text-8xl">
+          <h1 className="font-display text-[clamp(2.5rem,12.5vw,6rem)] font-bold uppercase leading-[0.9] [text-shadow:0_2px_24px_rgb(0_0_0/.6)] sm:text-8xl">
             A gastronomia <span className="text-orange [text-shadow:0_0_18px_rgb(255_107_44/.75),0_0_46px_rgb(255_107_44/.45)]">se conecta</span> aqui.
           </h1>
           <p className="max-w-xl text-lg text-soft">
