@@ -69,7 +69,7 @@ export default async function Painel({ searchParams }: { searchParams: SP }) {
           <Stat value={rep?.total ? Number(rep.media).toFixed(1).replace(".", ",") : "–"} label="sua nota" />
         </div>
 
-        <div className="lg:grid lg:grid-cols-3 lg:items-start lg:gap-6">
+        <div className={`lg:grid lg:items-start lg:gap-6 ${convites.length > 0 ? "lg:grid-cols-3" : "lg:grid-cols-2"}`}>
         {convites.length > 0 && (
           <section>
             <SectionTitle>Convites para você</SectionTitle>

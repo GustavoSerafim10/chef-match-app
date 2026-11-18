@@ -30,7 +30,6 @@ export function Disponibilidade({ ligado, voltar = "/painel" }: { ligado: boolea
       </div>
       <SubmitButton
         pendingText="…"
-        aria-pressed={ligado}
         className={`group inline-flex cursor-pointer items-center gap-3 rounded-full py-2 pl-5 pr-2 text-sm font-bold transition-all duration-300 ${
           ligado ? "bg-ok/20 text-paper ring-1 ring-ok/60 hover:bg-ok/30" : "brilho bg-orange text-ink hover:bg-orange-hi"
         }`}

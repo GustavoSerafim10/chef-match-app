@@ -11,12 +11,12 @@ export const btn =
 export const btnSm =
   "brilho inline-flex items-center justify-center gap-1.5 rounded-full bg-orange px-4 py-2 text-sm font-bold text-ink transition hover:bg-orange-hi disabled:opacity-50 cursor-pointer";
 export const btnGhost =
-  "inline-flex items-center justify-center gap-2 rounded-full border-2 border-white/25 bg-ink/40 px-5 py-3 font-bold text-paper backdrop-blur transition hover:border-orange hover:shadow-[0_0_18px_-4px_rgb(255_107_44/.6)] cursor-pointer";
+  "inline-flex items-center justify-center gap-2 rounded-full border-2 border-white/25 bg-ink/60 px-5 py-3 font-bold text-paper transition hover:border-orange hover:shadow-[0_0_18px_-4px_rgb(255_107_44/.6)] cursor-pointer";
 export const btnGhostSm =
-  "inline-flex items-center justify-center gap-1.5 rounded-full border-2 border-white/25 bg-ink/40 px-4 py-2 text-sm font-bold text-paper backdrop-blur transition hover:border-orange cursor-pointer";
+  "inline-flex items-center justify-center gap-1.5 rounded-full border-2 border-white/25 bg-ink/60 px-4 py-2 text-sm font-bold text-paper transition hover:border-orange cursor-pointer";
 export const card = "vidro rounded-2xl p-5";
 export const input =
-  "w-full rounded-xl border border-white/10 bg-[rgb(24_22_20/.72)] px-4 py-3 text-paper backdrop-blur placeholder:text-muted/70 transition focus:border-orange focus:shadow-[0_0_0_3px_rgb(255_107_44/.2)] focus:outline-none";
+  "w-full rounded-xl border border-white/10 bg-[rgb(24_22_20/.8)] px-4 py-3 text-paper md:backdrop-blur placeholder:text-muted/70 transition focus:border-orange focus:shadow-[0_0_0_3px_rgb(255_107_44/.2)] focus:outline-none";
 export const label = "text-xs font-bold uppercase tracking-wider text-muted";
 
 export function Logo({ className = "" }: { className?: string }) {
@@ -142,7 +142,7 @@ export function Notice({ erro, msg }: { erro?: string; msg?: string }) {
 
 export function Empty({ title, children, href, cta }: { title: string; children?: ReactNode; href?: string; cta?: string }) {
   return (
-    <div className="grid justify-items-start gap-2 rounded-2xl border border-dashed border-line p-6">
+    <div className="grid justify-items-start gap-2 rounded-2xl border border-dashed border-white/20 bg-ink/70 p-6">
       <p className="font-bold">{title}</p>
       {children && <p className="text-sm text-muted">{children}</p>}
       {href && cta && (
@@ -188,4 +188,4 @@ export async function lerAvisos(searchParams: SP) {
 
 /** Pílulas de filtro: a selecionada brilha em laranja. */
 export const filtroAtivo = "bg-orange text-ink shadow-[0_0_15px_rgb(255_107_44/.45)]";
-export const filtroInativo = "border border-white/10 bg-[rgb(24_22_20/.72)] text-soft backdrop-blur hover:border-orange/50 hover:text-paper";
+export const filtroInativo = "border border-white/10 bg-[rgb(24_22_20/.86)] text-soft hover:border-orange/50 hover:text-paper";

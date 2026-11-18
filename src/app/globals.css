@@ -70,18 +70,21 @@ body::before {
 
 /* Card clicável: sobe, acende a borda e ganha sombra luminosa */
 @utility clicavel {
+  @media (hover: hover) {
   &:hover {
     transform: translateY(-3px);
     border-color: rgb(255 107 44 / 0.45);
     box-shadow: 0 10px 30px -10px rgb(255 107 44 / 0.35);
+  }
   }
 }
 
 /* No celular o desfoque é mais leve (desempenho) */
 @media (max-width: 960px) {
   .vidro {
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: rgb(24 22 20 / 0.86);
   }
 }
 
@@ -146,18 +149,18 @@ body::before {
   top: 0;
   bottom: 0;
   width: 40%;
-  left: -60%;
+  left: 0;
   background: linear-gradient(100deg, transparent, rgb(255 255 255 / 0.45), transparent);
-  transform: skewX(-18deg);
+  transform: translateX(-150%) skewX(-18deg);
   animation: reflexo 4s ease-in-out infinite;
 }
 @keyframes reflexo {
   0%,
   70% {
-    left: -60%;
+    transform: translateX(-150%) skewX(-18deg);
   }
   100% {
-    left: 130%;
+    transform: translateX(330%) skewX(-18deg);
   }
 }
 
@@ -172,7 +175,21 @@ body::before {
   }
 }
 .online {
-  animation: pulso-status 2.4s ease-in-out infinite;
+  position: relative;
+  box-shadow: 0 0 0 1px rgb(63 179 127 / 0.6), 0 0 26px -6px rgb(63 179 127 / 0.6);
+}
+.online::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 1px rgb(63 179 127 / 0.9), 0 0 44px -4px rgb(63 179 127 / 0.85);
+  animation: pulso-opacidade 2.4s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes pulso-opacidade {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
 }
 @keyframes ponto {
   0% {
@@ -247,7 +264,9 @@ h3 {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * {
+  *,
+  *::before,
+  *::after {
     transition: none !important;
     animation: none !important;
   }

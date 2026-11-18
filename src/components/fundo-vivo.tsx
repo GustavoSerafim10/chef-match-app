@@ -44,6 +44,11 @@ export function FundoVivo({ foto, opacidade = 0.4, brasas = 30 }: { foto: string
     medir();
     const ps = Array.from({ length: qtd }, () => nova({}, true));
     const passo = (t: number) => {
+      // No celular desenha no máximo ~30 quadros por segundo (economiza bateria e GPU)
+      if (celular && ultimo && t - ultimo < 32) {
+        raf = requestAnimationFrame(passo);
+        return;
+      }
       const dt = Math.min((t - (ultimo || t)) / 1000, 0.05);
       ultimo = t;
       ctx.clearRect(0, 0, w, h);

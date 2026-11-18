@@ -77,7 +77,7 @@ export function NavMobile({ role }: { role: Role }) {
   return (
       <nav
         aria-label="Menu do app"
-        className="fixed inset-x-0 bottom-0 z-40 grid border-t border-line bg-ink/95 backdrop-blur md:hidden"
+        className="fixed inset-x-0 bottom-0 z-40 grid border-t border-line bg-ink/95 md:hidden"
         style={{
           gridTemplateColumns: `repeat(${items.length}, 1fr)`,
           paddingBottom: "max(8px, env(safe-area-inset-bottom))",
