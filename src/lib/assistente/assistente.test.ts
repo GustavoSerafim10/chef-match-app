@@ -104,3 +104,17 @@ describe("perguntarAoGemini", () => {
     await expect(perguntarAoGemini("X", [u("oi")], { chave: "k", modelo: "m", fetch: fetchFalso })).rejects.toThrow();
   });
 });
+
+import { INSTRUCOES, FRASE_SEM_RESPOSTA } from "./instrucoes";
+
+describe("INSTRUCOES", () => {
+  it("traz as regras, a frase de fallback e o conhecimento do projeto", () => {
+    expect(FRASE_SEM_RESPOSTA).toBe("Boa pergunta pra fazer à Rayanne e ao grupo no final! 😉");
+    expect(INSTRUCOES).toContain("Chef's Match");
+    expect(INSTRUCOES).toContain(FRASE_SEM_RESPOSTA);
+    expect(INSTRUCOES).toContain("Brasília");
+    expect(INSTRUCOES).toContain("chef-match-app.vercel.app");
+    expect(INSTRUCOES).not.toMatch(/<section|<div|{\s*margin/);
+    expect(INSTRUCOES.length).toBeLessThan(60000);
+  });
+});
